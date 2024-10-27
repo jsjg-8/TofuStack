@@ -1,10 +1,10 @@
-import { zod } from "sveltekit-superforms/adapters";
-import { fail, setError, superValidate } from "sveltekit-superforms";
-import { StatusCodes } from "$lib/constants/status-codes.js";
-import { updateEmailFormSchema, verifyEmailFormSchema } from "./schemas.js";
+import { zod } from 'sveltekit-superforms/adapters';
+import { fail, setError, superValidate } from 'sveltekit-superforms';
+import { StatusCodes } from '$lib/constants/status-codes.js';
+import { updateEmailFormSchema, verifyEmailFormSchema } from './schemas.js';
 
 export let load = async (event) => {
-	const authedUser = await event.locals.getAuthedUserOrThrow()
+	const authedUser = await event.locals.getAuthedUserOrThrow();
 
 	return {
 		authedUser,
@@ -16,17 +16,20 @@ export let load = async (event) => {
 export const actions = {
 	updateEmail: async ({ request, locals }) => {
 		const updateEmailForm = await superValidate(request, zod(updateEmailFormSchema));
-		if (!updateEmailForm.valid) return fail(StatusCodes.BAD_REQUEST, { updateEmailForm })
-		const { error } = await locals.api.iam.email.$patch({ json: updateEmailForm.data }).then(locals.parseApiResponse);
+		if (!updateEmailForm.valid) return fail(StatusCodes.BAD_REQUEST, { updateEmailForm });
+		const { error } = await locals.api.auth.email
+			.$patch({ json: updateEmailForm.data })
+			.then(locals.parseApiResponse);
 		if (error) return setError(updateEmailForm, 'email', error);
-		return { updateEmailForm }
+		return { updateEmailForm };
 	},
 	verifyEmail: async ({ request, locals }) => {
 		const verifyEmailForm = await superValidate(request, zod(verifyEmailFormSchema));
-		console.log(verifyEmailForm)
-		if (!verifyEmailForm.valid) return fail(StatusCodes.BAD_REQUEST, { verifyEmailForm })
-		const { error } = await locals.api.iam.email.verify.$post({ json: verifyEmailForm.data }).then(locals.parseApiResponse);
+		if (!verifyEmailForm.valid) return fail(StatusCodes.BAD_REQUEST, { verifyEmailForm });
+		const { error } = await locals.api.auth.email.verify
+			.$post({ json: verifyEmailForm.data })
+			.then(locals.parseApiResponse);
 		if (error) return setError(verifyEmailForm, 'token', error);
-		return { verifyEmailForm }
+		return { verifyEmailForm };
 	}
 };
