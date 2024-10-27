@@ -1,6 +1,6 @@
 {
-  "id": "5ac36b61-f609-40af-ae30-f1aac4d7b833",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "c7419c17-8c53-4b2b-a91e-f10b89a5aa87",
+  "prevId": "5ac36b61-f609-40af-ae30-f1aac4d7b833",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -375,7 +375,7 @@
         },
         "subscription_id": {
           "name": "subscription_id",
-          "type": "uuid",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },

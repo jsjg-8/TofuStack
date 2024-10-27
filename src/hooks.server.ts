@@ -11,7 +11,7 @@ const apiClient: Handle = async ({ event, resolve }) => {
 	const { api } = hc<ApiRoutes>('/', {
 		fetch: event.fetch,
 		headers: {
-			'x-forwarded-for': event.getClientAddress(),
+			// 'x-forwarded-for': event.getClientAddress(),
 			host: event.request.headers.get('host') || ''
 		}
 	});

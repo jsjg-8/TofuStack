@@ -2,3 +2,8 @@ export * from './sessions.table';
 export * from './users.table';
 export * from './login-requests.table';
 export * from './email-verifications.table';
+export * from './listing.table';
+export * from './business.table';
+export * from './subscriptions.table';
+export * from './payments.table';
+export * from './qr-codes.table';

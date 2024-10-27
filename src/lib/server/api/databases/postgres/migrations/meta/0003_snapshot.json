@@ -1,6 +1,6 @@
 {
-  "id": "5ac36b61-f609-40af-ae30-f1aac4d7b833",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "31ee480e-7caf-4fef-9f14-9e2ae0c0f77b",
+  "prevId": "59b8e2e0-36ea-4604-95ea-b3586495bca8",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -54,14 +54,14 @@
           "name": "created_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         }
       },
@@ -375,7 +375,7 @@
         },
         "subscription_id": {
           "name": "subscription_id",
-          "type": "uuid",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -407,9 +407,16 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp",
+          "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
           "default": "now()"
         }
       },
@@ -434,6 +441,63 @@
           "tableTo": "subscriptions",
           "columnsFrom": [
             "subscription_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "public.qrs": {
+      "name": "qrs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "business_id": {
+          "name": "business_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "menu_link": {
+          "name": "menu_link",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "qrs_business_id_business_id_fk": {
+          "name": "qrs_business_id_business_id_fk",
+          "tableFrom": "qrs",
+          "tableTo": "business",
+          "columnsFrom": [
+            "business_id"
           ],
           "columnsTo": [
             "id"
@@ -505,11 +569,12 @@
           "primaryKey": false,
           "notNull": true
         },
-        "plan_type": {
-          "name": "plan_type",
-          "type": "text",
+        "planType": {
+          "name": "planType",
+          "type": "plan",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "business_limit": {
           "name": "business_limit",
@@ -525,9 +590,10 @@
         },
         "status": {
           "name": "status",
-          "type": "text",
+          "type": "subs_status",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
       "indexes": {},

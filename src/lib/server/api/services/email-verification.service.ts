@@ -21,27 +21,35 @@ export class EmailVerificationService {
   // These steps follow the process outlined in OWASP's "Changing A User's Email Address" guide.
   // https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#changing-a-users-registered-email-address
   async create(userId: string, requestedEmail: string) {
-    // generate a token and expiry
-    const { token, expiry, hashedToken } = await this.tokensService.generateTokenWithExpiryAndHash(15, 'm')
-    const user = await this.usersRepository.findOneByIdOrThrow(userId)
+		// generate a token and expiry
+		const { token, expiry, hashedToken } = await this.tokensService.generateTokenWithExpiryAndHash(
+			15,
+			'm'
+		);
+		const user = await this.usersRepository.findOneByIdOrThrow(userId);
 
-    // create a new email verification record
-    await this.emailVerificationsRepository.create({ requestedEmail, userId, hashedToken, expiresAt: expiry })
+		// create a new email verification record
+		await this.emailVerificationsRepository.create({
+			requestedEmail,
+			userId,
+			hashedToken,
+			expiresAt: expiry
+		});
 
-    // A confirmation-required email message to the proposed new address, instructing the user to 
-    // confirm the change and providing a link for unexpected situations
-    this.mailerService.send({
-      to: requestedEmail,
-      email: new LoginVerificationEmail(token)
-    })
+		// A confirmation-required email message to the proposed new address, instructing the user to
+		// confirm the change and providing a link for unexpected situations
+		this.mailerService.send({
+			to: requestedEmail,
+			email: new LoginVerificationEmail(token)
+		});
 
-    // A notification-only email message to the current address, alerting the user to the impending change and 
-    // providing a link for an unexpected situation.
-    this.mailerService.send({
-      to: user.email,
-      email: new EmailChangeNoticeEmail()
-    })
-  }
+		// A notification-only email message to the current address, alerting the user to the impending change and
+		// providing a link for an unexpected situation.
+		this.mailerService.send({
+			to: user.email,
+			email: new EmailChangeNoticeEmail()
+		});
+	}
 
   async verify(userId: string, token: string) {
     const validRecord = await this.burnVerificationToken(userId, token)

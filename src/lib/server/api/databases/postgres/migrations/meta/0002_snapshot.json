@@ -1,6 +1,6 @@
 {
-  "id": "5ac36b61-f609-40af-ae30-f1aac4d7b833",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "59b8e2e0-36ea-4604-95ea-b3586495bca8",
+  "prevId": "c7419c17-8c53-4b2b-a91e-f10b89a5aa87",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -375,7 +375,7 @@
         },
         "subscription_id": {
           "name": "subscription_id",
-          "type": "uuid",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -505,11 +505,12 @@
           "primaryKey": false,
           "notNull": true
         },
-        "plan_type": {
-          "name": "plan_type",
-          "type": "text",
+        "planType": {
+          "name": "planType",
+          "type": "plan",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "business_limit": {
           "name": "business_limit",
@@ -525,9 +526,10 @@
         },
         "status": {
           "name": "status",
-          "type": "text",
+          "type": "subs_status",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
       "indexes": {},
