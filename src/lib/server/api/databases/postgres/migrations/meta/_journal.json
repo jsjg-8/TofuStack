@@ -29,6 +29,20 @@
       "when": 1730049191799,
       "tag": "0003_workable_master_chief",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1729196878223,
+      "tag": "0001_gifted_james_howlett",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1729199803558,
+      "tag": "0002_sharp_risque",
+      "breakpoints": true
     }
   ]
 }

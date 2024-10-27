@@ -22,8 +22,8 @@ export const emailVerificationsTable = pgTable('email_verifications', {
 });
 
 export const emailVerificationsRelations = relations(emailVerificationsTable, ({ one }) => ({
-  user: one(usersTable, {
-    fields: [emailVerificationsTable.userId],
-    references: [usersTable.id]
-  })
+	user: one(usersTable, {
+		fields: [emailVerificationsTable.userId],
+		references: [usersTable.id]
+	})
 }));
